@@ -1,5 +1,7 @@
 # Django settings for stsocial project.
 
+import os
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -107,6 +109,25 @@ ROOT_URLCONF = 'stsocial.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'stsocial.wsgi.application'
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.core.context_processors.tz',
+    'django.core.context_processors.request',
+    'django.contrib.messages.context_processors.messages',
+    'django_facebook.context_processors.facebook',
+)
+
+AUTHENTICATION_BACKENDS = (
+    'django_facebook.auth_backends.FacebookBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+AUTH_USER_MODEL = 'django_facebook.FacebookCustomUser'
+
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
@@ -124,6 +145,8 @@ INSTALLED_APPS = (
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+
+    'django_facebook',
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
@@ -156,3 +179,8 @@ LOGGING = {
         },
     }
 }
+
+# Django-facebook
+FACEBOOK_APP_ID = os.environ["FACEBOOK_APP_ID"]
+FACEBOOK_APP_SECRET = os.environ["FACEBOOK_APP_SECRET"]
+
